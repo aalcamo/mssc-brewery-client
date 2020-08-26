@@ -1,6 +1,7 @@
 package guru.springframework.msscbreweryclient.web.client;
 
 import guru.springframework.msscbreweryclient.web.model.BeerDto;
+import guru.springframework.msscbreweryclient.web.model.CustomerDto;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,22 @@ public class BreweryClient {
     }
 
     public void deleteBeer(UUID uuid) {
+        restTemplate.delete(apiHost + BEER_PATH_V1 + uuid);
+    }
+
+    public CustomerDto getCustomerById(UUID uuid) {
+        return restTemplate.getForObject(apiHost + BEER_PATH_V1 + uuid, CustomerDto.class);
+    }
+
+    public URI saveNewCustomer(CustomerDto customerDto) {
+        return restTemplate.postForLocation(apiHost + BEER_PATH_V1, customerDto);
+    }
+
+    public void updateCustomer(UUID uuid, CustomerDto customerDto) {
+        restTemplate.put(apiHost + BEER_PATH_V1 + uuid, customerDto);
+    }
+
+    public void deleteCustomer(UUID uuid) {
         restTemplate.delete(apiHost + BEER_PATH_V1 + uuid);
     }
 }
